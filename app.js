@@ -2,12 +2,16 @@ const PROJECTS = [
   {
     id: '01', name: '메일 명함 생성기', date: '2026.06.02', access: 'public',
     description: '이름·소속·연락처·로고·캐릭터를 골라 메일용 명함 이미지를 바로 만드는 도구.',
-    url: 'https://erakeun.github.io/mail-card-maker/', tags: ['제작기', 'PNG', '브라우저 도구'], visual: 'card-maker', tone: 'blue', preview: 'MAIL CARD MAKER'
+    url: 'https://erakeun.github.io/mail-card-maker/',
+    guideUrl: 'https://drive.google.com/drive/folders/1W7KVJj9QsAgtvrMVm1shcBtO0EuMFYbg?usp=drive_link',
+    tags: ['제작기', 'PNG', '브라우저 도구'], visual: 'card-maker', tone: 'blue', preview: 'MAIL CARD MAKER'
   },
   {
     id: '02', name: '행사용 명패 생성기', date: '2026.07.29', access: 'public',
     description: '참석자 명단으로 행사 명패를 여러 명 한 번에 만들고 양면·A4 출력까지 정리하는 자동 제작기.',
-    url: 'https://erakeun.github.io/nameplate-maker/', tags: ['제작기', '대량 생성', '인쇄'], visual: 'nameplate', tone: 'blue', preview: 'NAMEPLATE MAKER'
+    url: 'https://erakeun.github.io/nameplate-maker/',
+    guideUrl: 'https://drive.google.com/drive/folders/1PAlU32av2R772kF-FpZHUMxsRUE-7B2Y?usp=drive_link',
+    tags: ['제작기', '대량 생성', '인쇄'], visual: 'nameplate', tone: 'blue', preview: 'NAMEPLATE MAKER'
   },
   {
     id: '03', name: 'HY-ERICA 기사 아카이브', date: '2026.08.25', access: 'case',
@@ -23,7 +27,9 @@ const PROJECTS = [
   {
     id: '04', name: '안내문 제작기', date: '2026.08.25', access: 'public',
     description: '가로·세로 템플릿에 제목, 로고, 캐릭터를 배치해 행사 안내문을 만드는 도구.',
-    url: 'https://erakeun.github.io/notice-maker/', tags: ['제작기', '템플릿', '포스터'], visual: 'poster', tone: 'warm', preview: 'NOTICE MAKER'
+    url: 'https://erakeun.github.io/notice-maker/',
+    guideUrl: 'https://drive.google.com/drive/folders/1z2wTuXZKaiA6gN-SEdIlV8BPCjnwpXyf?usp=drive_link',
+    tags: ['제작기', '템플릿', '포스터'], visual: 'poster', tone: 'warm', preview: 'NOTICE MAKER'
   },
   {
     id: '05', name: '웰컴보드 제작기', date: '2026.08.26', access: 'public',
@@ -36,38 +42,68 @@ const PROJECTS = [
     url: 'https://erakeun.github.io/erica-pr-request/', tags: ['업무 폼', '자료 접수', '자동 전달'], visual: 'form', tone: 'sky', preview: 'PRESS RELEASE'
   },
   {
-    id: '07', name: '캐릭터 활용 신청 시스템', date: '2026.08.27', access: 'public', operational: true,
+    id: '07', name: '캐릭터 활용 신청 시스템', date: '2026.08.27', access: 'case',
     description: '대학 캐릭터 활용 신청을 받고 담당자가 승인·보완·불허 처리하는 업무 시스템.',
-    url: 'https://erakeun.github.io/character-use/', tags: ['신청', '승인', '관리 흐름'], visual: 'form', tone: 'violet', preview: 'CHARACTER REQUEST'
+    tags: ['신청', '승인', '관리 흐름'], visual: 'form', tone: 'violet', preview: 'CHARACTER REQUEST',
+    case: {
+      problem: '캐릭터 활용 신청이 여러 경로로 접수돼 필수 항목 확인과 처리 상태 관리가 어려웠습니다.',
+      flow: ['활용 목적·계획 입력', '제출 내용 검토', '승인·보완·불허 결정', '결과 안내 및 이력 관리'],
+      features: ['신청 항목 표준화', '승인·보완·불허 처리', '신청 이력 관리'],
+      apply: '캐릭터·로고 등 기관 브랜드 자산의 사용 승인 업무에 적용할 수 있습니다.'
+    }
   },
   {
-    id: '08', name: '하냥이 인형탈 대여 시스템', date: '2026.08.27', access: 'public', operational: true,
+    id: '08', name: '하냥이 인형탈 대여 시스템', date: '2026.08.27', access: 'case',
     description: '대여 가능일 확인부터 신청, 승인·거절, 결과 안내까지 연결한 인형탈 예약 시스템.',
-    url: 'https://erakeun.github.io/hanyang-costume-rental/', tags: ['대여', '달력', '승인'], visual: 'calendar', tone: 'violet', preview: 'COSTUME RENTAL'
+    tags: ['대여', '달력', '승인'], visual: 'calendar', tone: 'violet', preview: 'COSTUME RENTAL',
+    case: {
+      problem: '대여 가능일 확인과 신청·승인 안내를 개별 연락으로 처리해 일정 조율에 시간이 많이 들었습니다.',
+      flow: ['대여 가능일 확인', '이용 일정·목적 신청', '담당자 승인·거절', '결과 안내 및 예약 반영'],
+      features: ['대여 가능일 달력', '신청 승인·거절', '결과 메일 안내'],
+      apply: '공용 장비·행사용품·공간의 예약 관리에도 적용할 수 있습니다.'
+    }
   },
   {
     id: '09', name: '아고라 대관 시스템', date: '2026.08.28', access: 'public', operational: true,
     description: '공간별 예약 신청과 승인·불허 코멘트, 관리자 운영까지 묶은 대관 관리 시스템.',
-    url: 'https://erakeun.github.io/agora-rental/', tags: ['대관', '예약', '관리자'], visual: 'calendar', tone: 'blue', preview: 'SPACE RESERVATION'
+    url: 'https://erakeun.github.io/agora-rental/',
+    guideUrl: 'https://drive.google.com/drive/folders/18XS0eGhYlIFs8Mhxc6VoaohdbwQKFB1V?usp=drive_link',
+    tags: ['대관', '예약', '관리자'], visual: 'calendar', tone: 'blue', preview: 'SPACE RESERVATION'
   },
   {
-    id: '10', name: 'ERICA 촬영·취재 지원 요청', date: '2026.08.28', access: 'public', operational: true,
+    id: '10', name: 'ERICA 촬영·취재 지원 요청', date: '2026.08.28', access: 'case',
     description: '교내 촬영과 취재 지원 요청을 필요한 일정·내용과 함께 접수하는 업무 요청 시스템.',
-    url: 'https://erakeun.github.io/erica-press/', tags: ['촬영', '취재', '업무 요청'], visual: 'form', tone: 'sky', preview: 'MEDIA SUPPORT'
+    tags: ['촬영', '취재', '업무 요청'], visual: 'form', tone: 'sky', preview: 'MEDIA SUPPORT',
+    case: {
+      problem: '촬영·취재 요청마다 전달 형식이 달라 필요한 일정과 내용을 다시 확인해야 했습니다.',
+      flow: ['요청 유형 선택', '일정·장소·요청 내용 입력', '담당자 접수·검토', '지원 여부 안내'],
+      features: ['요청 유형별 접수', '필수 정보 표준화', '담당자 전달용 내용 정리'],
+      apply: '사진·영상·취재·홍보 지원처럼 사전 정보가 필요한 협업 요청 업무에 적용할 수 있습니다.'
+    }
   },
   {
-    id: '11', name: '근로장학생 관리시스템', date: '2026.08.29', access: 'login',
+    id: '11', name: '근로장학생 관리시스템', date: '2026.08.29', access: 'case',
     description: '근로장학생 정보와 개인별 근무일정, 주·월 근무표, 결근·대타 및 예산 현황을 한곳에서 관리하는 시스템.',
-    url: 'https://erakeun.github.io/workstudent-manager/', tags: ['근로장학생', '근무 일정', '예산 관리'], visual: 'dashboard', tone: 'green', preview: 'WORK STUDENT'
+    guideUrl: 'https://drive.google.com/drive/folders/1FmQyEXxmZ-DjyqSx_DiwW8wnIbmr6txy?usp=drive_link',
+    tags: ['근로장학생', '근무 일정', '예산 관리'], visual: 'dashboard', tone: 'green', preview: 'WORK STUDENT',
+    case: {
+      problem: '학생 정보와 근무 일정, 결근·대타, 예산 현황이 여러 문서에 흩어져 관리가 복잡했습니다.',
+      flow: ['학기·학생 정보 등록', '개인별 근무 일정 입력', '결근·대타 내역 반영', '주·월 근무표와 예산 확인'],
+      features: ['개인별 근무 달력', '주·월 근무표 자동 정리', '공휴일 반영 및 예산 예측'],
+      apply: '근로장학생·조교·단기 인력처럼 일정과 예산을 함께 관리하는 업무에 적용할 수 있습니다.'
+    }
   },
   {
     id: '12', name: 'ERICA 캠퍼스맵', date: '2026.08.30', access: 'public',
     description: '건물 번호·건물명으로 위치를 검색하고 연결된 건물의 내부 안내도까지 확인하는 인터랙티브 캠퍼스맵.',
-    url: 'https://erakeun.github.io/erica-campus-map/', tags: ['캠퍼스맵', '건물 검색', '길찾기'], visual: 'map', tone: 'green', preview: 'CAMPUS MAP'
+    url: 'https://erakeun.github.io/erica-campus-map/',
+    guideUrl: 'https://drive.google.com/drive/folders/1j8p8RhnUy2_PmOg10kwG5ZGpCsbBkpZm?usp=drive_link',
+    tags: ['캠퍼스맵', '건물 검색', '길찾기'], visual: 'map', tone: 'green', preview: 'CAMPUS MAP'
   },
   {
     id: '13', name: '홍보물품 재고관리 시스템', date: '2026.08.31', access: 'case',
     description: '홍보물품의 입고부터 출고·반납·폐기·분실·실사까지 한 흐름으로 기록하는 내부 재고관리 시스템.',
+    guideUrl: 'https://drive.google.com/drive/folders/1KWpZ4S2w2LFhhQfIRzGBC5t86FC3TTXe?usp=drive_link',
     tags: ['재고 관리', '입출고', '이력 관리'], visual: 'dashboard', tone: 'blue', preview: 'INVENTORY',
     case: {
       problem: '품목별 실제 수량과 변동 사유가 여러 문서에 흩어져 현재 재고와 확인이 필요한 품목을 한눈에 보기 어려웠습니다.',
@@ -95,6 +131,7 @@ const PROJECTS = [
   {
     id: '16', name: '차량 운행일지 시스템', date: '2026.08.31', access: 'case',
     description: '부서 차량의 운행 정보를 모바일에서 입력하고 기록을 자동 누적하는 업무 도구.',
+    guideUrl: 'https://drive.google.com/drive/folders/1vB-6NBjl1E__dRO3uoFifAtkMhrOXOQu?usp=sharing',
     tags: ['차량 관리', '모바일 입력', '자동 누적'], visual: 'form', tone: 'sky', preview: 'DRIVING LOG',
     case: {
       problem: '종이 또는 사후 입력 방식에서는 기록 누락이 생기고, 월별 운행 내역을 다시 취합하는 데 시간이 들었습니다.',
@@ -115,9 +152,15 @@ const PROJECTS = [
     }
   },
   {
-    id: '18', name: '나눔 서포터즈 기부금 수불대장', date: '2026.09.04', access: 'login',
-    description: '나눔 서포터즈의 기부금 수입·지출 내역과 운영 일정을 인증된 사용자가 관리하는 업무 시스템.',
-    url: 'https://erica-nanum-dev.web.app/schedule.html', tags: ['나눔 서포터즈', '기부금', '수불대장'], visual: 'dashboard', tone: 'green', preview: 'NANUM SUPPORTERS'
+    id: '18', name: '나눔 서포터즈 기부금 수불대장', date: '2026.09.04', access: 'case',
+    description: '나눔 서포터즈의 기부금 수입·지출 내역과 운영 일정을 한곳에서 관리하는 업무 시스템.',
+    tags: ['나눔 서포터즈', '기부금', '수불대장'], visual: 'dashboard', tone: 'green', preview: 'NANUM SUPPORTERS',
+    case: {
+      problem: '기부금 수입·지출 내역과 운영 일정이 분리돼 전체 현황을 한눈에 파악하기 어려웠습니다.',
+      flow: ['수입·지출 내역 등록', '활동 일정 기록', '항목별 내역 집계', '운영 현황 확인'],
+      features: ['기부금 수입·지출 기록', '항목별 수불 내역 조회', '활동 일정 통합 관리'],
+      apply: '학생단체·캠페인·소규모 기금처럼 회계 내역과 운영 일정을 함께 관리하는 업무에 적용할 수 있습니다.'
+    }
   },
   {
     id: '19', name: 'ERICA 오늘밥', date: '2026.09.04', access: 'public',
@@ -128,7 +171,6 @@ const PROJECTS = [
 
 const ACCESS = {
   public: { label: '직접 사용 가능', action: '직접 사용해보기', icon: '↗' },
-  login: { label: '교내 로그인 필요', action: '로그인 화면 보기', icon: '↗' },
   case: { label: '외부용 사례 요약', action: '사례 자세히 보기', icon: '→' }
 };
 
@@ -189,6 +231,24 @@ function previewMarkup(project) {
   return `<div class="preview-window">${bar}${content}</div>`;
 }
 
+function guideMarkup(project) {
+  if (!project.guideUrl) {
+    return `
+      <div class="guide-bar unavailable" aria-disabled="true" aria-label="${escapeHtml(project.name)} 설계자료 준비 중">
+        <span class="guide-icon" aria-hidden="true">↓</span>
+        <span class="guide-copy"><strong>설계방법</strong><small>외부 공유용 자료</small></span>
+        <span class="guide-action">준비 중</span>
+      </div>`;
+  }
+
+  return `
+    <a class="guide-bar" href="${escapeHtml(project.guideUrl)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" aria-label="${escapeHtml(project.name)} 설계자료 열어보기">
+      <span class="guide-icon" aria-hidden="true">↓</span>
+      <span class="guide-copy"><strong>설계방법</strong><small>설치자료 · 배포파일</small></span>
+      <span class="guide-action">열어보기 ↗</span>
+    </a>`;
+}
+
 function cardMarkup(project) {
   const access = ACCESS[project.access];
   const body = `
@@ -202,11 +262,14 @@ function cardMarkup(project) {
       <div class="card-action"><span>${escapeHtml(access.action)}</span><span class="action-arrow" aria-hidden="true">${access.icon}</span></div>
     </div>`;
 
+  let card = '';
   if (project.access === 'case') {
-    return `<button class="project-card" type="button" data-case="${escapeHtml(project.id)}" data-access="case" aria-label="${escapeHtml(project.name)} 사례 자세히 보기">${body}</button>`;
+    card = `<button class="project-card" type="button" data-case="${escapeHtml(project.id)}" data-access="case" aria-label="${escapeHtml(project.name)} 사례 자세히 보기">${body}</button>`;
+  } else {
+    card = `<a class="project-card" href="${escapeHtml(project.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-access="${escapeHtml(project.access)}" aria-label="${escapeHtml(project.name)} ${escapeHtml(access.action)}">${body}</a>`;
   }
 
-  return `<a class="project-card" href="${escapeHtml(project.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-access="${escapeHtml(project.access)}" aria-label="${escapeHtml(project.name)} ${escapeHtml(access.action)}">${body}</a>`;
+  return `<article class="project-item">${card}${guideMarkup(project)}</article>`;
 }
 
 function renderProjects(filter = 'all') {
@@ -301,11 +364,10 @@ document.querySelector('#inquiryForm').addEventListener('submit', event => {
 const counts = PROJECTS.reduce((result, project) => {
   result[project.access] += 1;
   return result;
-}, { public: 0, login: 0, case: 0 });
+}, { public: 0, case: 0 });
 
 document.querySelector('#totalCount').textContent = PROJECTS.length;
 document.querySelector('#publicCount').textContent = counts.public;
-document.querySelector('#loginCount').textContent = counts.login;
 document.querySelector('#caseCount').textContent = counts.case;
 document.querySelector('#year').textContent = new Date().getFullYear();
 renderProjects();
