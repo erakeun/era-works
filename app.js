@@ -174,6 +174,9 @@ const ACCESS = {
   case: { label: '외부용 사례 요약', action: '사례 자세히 보기', icon: '→' }
 };
 
+const SITE_VERSION = 'v1.0.0';
+const INQUIRY_RECIPIENT = 'keun0810@hanyang.ac.kr';
+
 const grid = document.querySelector('#projectGrid');
 const dialog = document.querySelector('#caseDialog');
 let currentCaseId = null;
@@ -225,7 +228,7 @@ function previewMarkup(project) {
       content = '<div class="mock menu"><div class="menu-head"><b>ERICA 오늘의 메뉴</b><small>오늘 뭐 먹지?</small></div><div class="menu-tabs"><i></i><i></i><i></i></div><div class="meal-grid"><div class="meal-card"><b>학생식당</b><i></i><i></i></div><div class="meal-card"><b>창의인재원</b><i></i><i></i></div></div></div>';
       break;
     default:
-      content = `<div class="mock generic"><div class="mock-kicker">ERA WORKS</div><div class="mock-title">${escapeHtml(project.name)}</div>${lineSet()}<div class="mock-actions"><i></i><i></i></div></div>`;
+      content = `<div class="mock generic"><div class="mock-kicker">PROJECT MACH</div><div class="mock-title">${escapeHtml(project.name)}</div>${lineSet()}<div class="mock-actions"><i></i><i></i></div></div>`;
   }
 
   return `<div class="preview-window">${bar}${content}</div>`;
@@ -341,14 +344,11 @@ PROJECTS.forEach(project => {
   referenceSelect.appendChild(option);
 });
 
-document.querySelector('#inquiryForm').addEventListener('submit', event => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  if (!form.reportValidity()) return;
+function buildInquiryMailto(form) {
   const value = name => form.elements[name].value.trim();
-  const subject = `[ERA WORKS] 업무 적용 문의 - ${value('organization')}`;
+  const subject = `[PROJECT MACH] 업무 적용 문의 - ${value('organization')} / ${value('name')}`;
   const body = [
-    '[ERA WORKS · 업무 적용 문의]', '',
+    '[PROJECT MACH · 업무 적용 문의]', '',
     `이름: ${value('name')}`,
     `소속 기관·부서: ${value('organization')}`,
     `이메일: ${value('email')}`,
@@ -358,7 +358,14 @@ document.querySelector('#inquiryForm').addEventListener('submit', event => {
     `현재 사용하는 도구: ${value('currentTool') || '미작성'}`,
     `희망 시기: ${value('timing') || '미작성'}`
   ].join('\n');
-  window.location.href = `mailto:keun0810@hanyang.ac.kr?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  return `mailto:${INQUIRY_RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+document.querySelector('#inquiryForm').addEventListener('submit', event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  if (!form.reportValidity()) return;
+  window.location.href = buildInquiryMailto(form);
 });
 
 const counts = PROJECTS.reduce((result, project) => {
@@ -369,5 +376,9 @@ const counts = PROJECTS.reduce((result, project) => {
 document.querySelector('#totalCount').textContent = PROJECTS.length;
 document.querySelector('#publicCount').textContent = counts.public;
 document.querySelector('#caseCount').textContent = counts.case;
+document.querySelector('[data-filter="all"] span').textContent = PROJECTS.length;
+document.querySelector('[data-filter="public"] span').textContent = counts.public;
+document.querySelector('[data-filter="case"] span').textContent = counts.case;
 document.querySelector('#year').textContent = new Date().getFullYear();
+document.querySelector('#version').textContent = SITE_VERSION;
 renderProjects();
