@@ -166,6 +166,31 @@ const PROJECTS = [
     id: '19', name: 'ERICA 오늘밥', date: '2026.09.04', access: 'public',
     description: 'ERICA 교내 식당의 오늘 메뉴와 운영 정보를 식당별·시간대별로 빠르게 확인하는 초경량 메뉴 사이트.',
     url: 'https://erakeun.github.io/erica-today-menu/', tags: ['오늘의 메뉴', '교내 식당', '자동 갱신'], visual: 'menu', tone: 'sky', preview: 'TODAY MENU'
+  },
+  {
+    id: '20', name: '컨퍼런스홀 LED 제작기', date: '2026.09.09', access: 'public',
+    description: '행사마다 반복되는 LED 현수막 제작을 웹에서 공식 2560 × 256 규격으로 구성하고, 행사 정보와 디자인 프리셋을 적용해 PPTX·PNG로 출력하는 제작 도구.',
+    url: 'https://erakeun.github.io/conference-hall-led-maker/', tags: ['행사 운영', 'LED 현수막', 'PPTX·PNG'], visual: 'conference-led', tone: 'blue', preview: 'LED BANNER MAKER'
+  },
+  {
+    id: '21', name: 'ERICA 컨퍼런스홀 좌석배치 시스템', date: '2026.09.15', access: 'public',
+    description: '행사마다 반복되는 PRIME 컨퍼런스홀 좌석 배치를 웹에서 시각적으로 구성하고, 참석자 배정·저장·출력까지 이어지도록 만든 행사 운영 도구.',
+    url: 'https://erakeun.github.io/erica-seat-planner/', tags: ['좌석 배치', '행사 운영', '저장·출력'], visual: 'seat-plan', tone: 'blue', preview: 'PRIME HALL · 63 SEATS'
+  },
+  {
+    id: '22', name: '서울캠퍼스 좌석배치 시스템', date: '2026.09.15', access: 'public',
+    description: '서울캠퍼스 신본관 회의실1의 좌석 배치를 웹에서 시각적으로 구성하고, 참석자 배정·저장·출력까지 이어지도록 만든 행사 운영 도구.',
+    url: 'https://erakeun.github.io/seoul-seat-planner/', tags: ['좌석 배치', '행사 운영', '서울캠퍼스'], visual: 'seat-plan', tone: 'sky', preview: 'MEETING ROOM · 53 SEATS'
+  },
+  {
+    id: '23', name: 'ERICA 컨퍼런스홀 중강당 3층 좌석배치 제작기', date: '2026.09.16', access: 'public',
+    description: '중강당 3층 406석의 참석자와 사용 상태를 좌석별로 배정하고, 명단 검색·자동 배치·저장·인쇄를 지원하는 행사 운영 도구.',
+    url: 'https://erakeun.github.io/erica-auditorium-seat-maker/', tags: ['좌석 배치', '406석', '인쇄·PDF'], visual: 'auditorium', tone: 'green', preview: 'AUDITORIUM · 406 SEATS'
+  },
+  {
+    id: '24', name: 'ERICA 디자인 요청 시스템', date: '2026.09.17', access: 'public', operational: true,
+    description: '캐릭터의 새 표정·동작이나 현수막·포스터·카드뉴스 제작 요청을 선택형 문항으로 정리해 담당자 이메일 협의로 연결하는 교내 디자인 요청 시스템.',
+    url: 'https://erakeun.github.io/erica-design-request/', tags: ['디자인 요청', '신청·접수', '업무 표준화'], visual: 'design-request', tone: 'violet', preview: 'DESIGN REQUEST'
   }
 ];
 
@@ -174,7 +199,7 @@ const ACCESS = {
   case: { label: '외부용 사례 요약', action: '사례 자세히 보기', icon: '→' }
 };
 
-const SITE_VERSION = 'v1.0.0';
+const SITE_VERSION = 'v1.1.0';
 const INQUIRY_RECIPIENT = 'keun0810@hanyang.ac.kr';
 
 const grid = document.querySelector('#projectGrid');
@@ -226,6 +251,18 @@ function previewMarkup(project) {
       break;
     case 'menu':
       content = '<div class="mock menu"><div class="menu-head"><b>ERICA 오늘의 메뉴</b><small>오늘 뭐 먹지?</small></div><div class="menu-tabs"><i></i><i></i><i></i></div><div class="meal-grid"><div class="meal-card"><b>학생식당</b><i></i><i></i></div><div class="meal-card"><b>창의인재원</b><i></i><i></i></div></div></div>';
+      break;
+    case 'conference-led':
+      content = '<div class="mock conference-led"><div class="led-controls"><b>행사 정보</b><i></i><i></i><div class="led-presets"><span></span><span></span><span></span></div></div><div class="led-preview"><small>2560 × 256</small><b>ERICA<br>행사 현수막</b><div><span>PPTX</span><span>PNG</span></div></div></div>';
+      break;
+    case 'seat-plan':
+      content = '<div class="mock seat-plan"><div class="seat-sidebar"><b>ATTENDEES</b><i></i><i></i><i></i><i></i></div><div class="seat-stage"><strong>SCREEN · STAGE</strong><div class="seat-grid">' + '<i></i>'.repeat(35) + '</div><small>좌석 배치 · 저장 · 출력</small></div></div>';
+      break;
+    case 'auditorium':
+      content = '<div class="mock auditorium"><div class="auditorium-stage-mini">SCREEN · STAGE</div><div class="auditorium-zones"><div>L1</div><div>L2</div><div>C</div><div>R2</div><div>R1</div></div><small>406 SEATS · 5 ZONES</small></div>';
+      break;
+    case 'design-request':
+      content = '<div class="mock design-request"><div class="design-request-head"><b>ERICA DESIGN REQUEST</b><span>1 / 3</span></div><div class="design-request-title">어떤 작업이 필요한가요?</div><div class="design-request-options"><div><b>캐릭터 그림</b><small>새 표정·동작</small></div><div><b>홍보물</b><small>현수막·포스터·카드뉴스</small></div></div><div class="design-request-flow"><span>작업 선택</span><i>→</i><span>정보 입력</span><i>→</i><span>신청</span></div></div>';
       break;
     default:
       content = `<div class="mock generic"><div class="mock-kicker">PROJECT MACH</div><div class="mock-title">${escapeHtml(project.name)}</div>${lineSet()}<div class="mock-actions"><i></i><i></i></div></div>`;

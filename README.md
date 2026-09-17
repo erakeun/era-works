@@ -5,7 +5,7 @@ Making Administration Change at Hanyang
 한양대학교 ERICA 발전협력팀이 AI와 함께 만든 외부 공유용 업무혁신 사례 페이지입니다. 공개 가능한 도구는 직접 연결하고, 내부 시스템은 실제 서비스 대신 문제·업무 흐름·핵심 기능·다른 조직의 활용 가능성을 소개합니다.
 
 - 운영 주소: https://erakeun.github.io/era-works/
-- 현재 버전: v1.0.0
+- 현재 버전: v1.1.0
 
 이 저장소에는 별도 버전 체계가 없었으므로 PROJECT MACH 브랜드 변경본부터 v1.0.0으로 관리를 시작합니다.
 
@@ -18,7 +18,7 @@ Making Administration Change at Hanyang
 
 ## 구성
 
-- 공개 도구 9개
+- 공개 도구 14개
 - 외부용 사례 요약 10개
 - 검수된 설계자료 8개
 - 업무 적용 문의 폼
