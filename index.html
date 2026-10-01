@@ -12,10 +12,11 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0a2447">
+  <meta name="theme-color" content="#f6f8fb">
   <meta name="referrer" content="no-referrer">
   <meta name="description" content="한양대학교 ERICA 발전협력팀이 AI와 함께 만든 업무혁신 사례를 소개합니다. 직접 사용할 수 있는 도구와 외부 공유용 설계자료를 살펴보고 업무 적용을 문의하세요.">
   <title>PROJECT MACH | 한양대학교 ERICA 업무혁신 사례</title>
+  <link rel="icon" href="assets/mach-symbol.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -24,8 +25,8 @@
   <header class="site-header">
     <div class="shell nav-wrap">
       <a class="brand" href="#top" aria-label="PROJECT MACH 홈">
-        <span class="brand-mark" aria-hidden="true">M</span>
-        <span class="brand-copy"><strong>PROJECT MACH</strong><small>한양대학교 ERICA 발전협력팀</small></span>
+        <img class="brand-logo" src="assets/mach-wordmark.svg" width="254" height="58" alt="MACH">
+        <span class="brand-context">ERICA AI PROJECTS</span>
       </a>
       <nav class="nav-links" aria-label="주요 메뉴">
         <a href="#projects">프로젝트</a>
@@ -36,41 +37,92 @@
 
   <main id="top">
     <section class="hero shell" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p class="eyebrow"><span></span> AI-ASSISTED ADMINISTRATIVE INNOVATION</p>
-        <h1 id="hero-title">PROJECT MACH</h1>
+      <div class="hero-identity">
+        <p class="eyebrow"><span aria-hidden="true"></span>AI-ASSISTED ADMINISTRATIVE INNOVATION</p>
+        <h1 id="hero-title"><span class="hero-project">PROJECT</span><img class="hero-wordmark" src="assets/mach-wordmark.svg" width="254" height="58" alt="MACH"></h1>
         <p class="hero-subtitle">Making Administration Change at Hanyang</p>
         <p class="hero-affiliation">한양대학교 ERICA 발전협력팀</p>
+        <div class="portfolio-summary" aria-label="프로젝트 현황">
+          <span><strong id="totalCount">24</strong> 업무혁신 사례</span>
+          <span><strong id="publicCount">14</strong> 직접 사용</span>
+          <span><strong id="caseCount">10</strong> 사례 요약</span>
+        </div>
+      </div>
+      <div class="hero-context">
         <p class="hero-tagline">AI로 행정의 속도를 높이다.</p>
         <p class="hero-lead">반복되는 입력과 확인, 흩어진 기록처럼 현장에서 마주한 불편을 AI와 함께 작고 쓸모 있는 업무 시스템으로 바꾸고 있습니다. 직접 사용할 수 있는 도구와 내부 운영 사례의 업무 구조를 살펴보고, 우리 조직에 맞게 적용할 방법을 찾아보세요.</p>
         <div class="hero-actions">
-          <a class="button primary" href="#projects">업무혁신 사례 살펴보기 <span aria-hidden="true">↓</span></a>
-          <a class="button secondary" href="#inquiry">우리 업무에 적용하기</a>
-        </div>
-        <p class="hero-note"><span aria-hidden="true">●</span> 내부 운영 사례는 실제 서비스 링크 대신 화면 구성 예시와 업무 흐름을 소개합니다.</p>
-      </div>
-
-      <div class="hero-visual" aria-label="업무혁신 과정: 발견, 설계, 구현, 운영">
-        <div class="process-card">
-          <div class="process-head"><span>MACH / PROCESS</span><span>2026</span></div>
-          <p class="process-kicker">FROM FRICTION TO FLOW</p>
-          <h2>현장의 불편을,<br>다시 쓰이는 시스템으로</h2>
-          <ol class="process-list">
-            <li><b>01</b><span><strong>발견</strong><small>반복되는 불편과 누락을 찾습니다.</small></span></li>
-            <li><b>02</b><span><strong>설계</strong><small>실제 업무에 맞는 흐름을 정리합니다.</small></span></li>
-            <li><b>03</b><span><strong>구현</strong><small>AI와 함께 만들고 동작을 검증합니다.</small></span></li>
-            <li><b>04</b><span><strong>운영</strong><small>현장 피드백으로 보완하고 재사용합니다.</small></span></li>
-          </ol>
+          <a class="hero-link" href="#projects">업무혁신 사례 살펴보기 <span aria-hidden="true">↓</span></a>
+          <a class="hero-link" href="#inquiry">우리 업무에 적용하기 <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
 
-    <section class="stats-band" aria-label="프로젝트 현황">
-      <div class="shell stats-grid">
-        <div class="stat"><strong id="totalCount">24</strong><span>업무혁신 사례</span></div>
-        <div class="stat"><strong id="publicCount">14</strong><span>직접 사용 가능한 도구</span></div>
-        <div class="stat"><strong id="caseCount">10</strong><span>외부용 사례 요약</span></div>
+    <section class="projects-section shell" id="projects" aria-labelledby="projects-title">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">PROJECT MACH · CASES</p>
+          <h2 id="projects-title">프로젝트 둘러보기</h2>
+        </div>
+        <p><span id="visibleCount">24</span> / 24 CASES</p>
       </div>
+
+      <div class="discovery-panel">
+        <div class="project-search" role="search" aria-label="프로젝트 찾기">
+          <div class="search-field">
+            <label class="sr-only" for="projectSearch">프로젝트명·기능 검색</label>
+            <span class="search-icon" aria-hidden="true"></span>
+            <input id="projectSearch" type="search" placeholder="필요한 도구 검색" aria-controls="projectGrid" aria-describedby="searchHelp" autocomplete="off" aria-keyshortcuts="/ Escape">
+            <kbd class="search-shortcut" aria-hidden="true">/</kbd>
+            <button id="clearSearch" class="search-clear" type="button" aria-label="검색어만 지우기" title="검색어만 지우기 (Esc)" hidden>×</button>
+          </div>
+          <div class="select-field">
+            <label class="sr-only" for="projectCategory">업무 분류</label>
+            <select id="projectCategory" aria-controls="projectGrid">
+              <option value="all">모든 업무</option><option value="maker">제작·행사</option><option value="request">신청·예약</option><option value="manage">관리·기록</option><option value="info">정보·검색</option>
+            </select>
+          </div>
+          <div class="select-field sort-field">
+            <label class="sr-only" for="projectSort">정렬</label>
+            <select id="projectSort" aria-controls="projectGrid"><option value="oldest">오래된순</option><option value="newest">최신순</option></select>
+          </div>
+        </div>
+        <p id="searchHelp" class="project-help">이름·설명·태그에서 검색합니다. 여러 단어를 띄어 쓰면 모두 포함된 프로젝트를 찾습니다.</p>
+        <div class="filter-tools">
+          <div class="filter-row" role="group" aria-label="프로젝트 공개 범위 필터">
+            <button class="filter active" type="button" data-filter="all" aria-pressed="true">전체 <span>24</span></button>
+            <button class="filter" type="button" data-filter="public" aria-pressed="false">직접 사용 <span>14</span></button>
+            <button class="filter" type="button" data-filter="case" aria-pressed="false">사례 요약 <span>10</span></button>
+          </div>
+          <label class="guide-only"><input id="guideOnly" type="checkbox" aria-controls="projectGrid">설계자료 있는 프로젝트만</label>
+        </div>
+      </div>
+      <div class="results-row">
+        <p id="projectResults" role="status" aria-live="polite" aria-atomic="true"></p>
+        <button id="resetDiscovery" type="button">검색·필터 초기화</button>
+      </div>
+      <div id="emptyResults" class="empty-results" hidden>
+        <span class="empty-icon" aria-hidden="true">⌕</span>
+        <h3>조건에 맞는 프로젝트가 없습니다.</h3>
+        <p>검색어를 바꾸거나 필터를 초기화해 전체 목록을 확인하세요.</p>
+        <button id="emptyReset" class="button secondary" type="button">전체 프로젝트 보기</button>
+      </div>
+
+      <div class="project-grid" id="projectGrid"></div>
+      <p class="materials-note"><span aria-hidden="true">✓</span> 설계자료는 외부 공유용으로 정리된 배포본만 연결했습니다. 운영 데이터와 내부 설정값은 포함하지 않습니다.</p>
+      <p class="hero-note"><span aria-hidden="true">●</span> 내부 운영 사례는 실제 서비스 링크 대신 화면 구성 예시와 업무 흐름을 소개합니다.</p>
+    </section>
+
+    <section class="process-section shell" aria-label="업무혁신 과정">
+      <details class="process-details">
+        <summary><span><span class="section-kicker">MACH / PROCESS</span><strong>현장의 불편을, 다시 쓰이는 시스템으로</strong></span><span class="summary-toggle" aria-hidden="true">+</span></summary>
+        <div class="process-panel"><p class="process-kicker">FROM FRICTION TO FLOW</p><ol class="process-list">
+            <li><b>01</b><span><strong>발견</strong><small>반복되는 불편과 누락을 찾습니다.</small></span></li>
+            <li><b>02</b><span><strong>설계</strong><small>실제 업무에 맞는 흐름을 정리합니다.</small></span></li>
+            <li><b>03</b><span><strong>구현</strong><small>AI와 함께 만들고 동작을 검증합니다.</small></span></li>
+            <li><b>04</b><span><strong>운영</strong><small>현장 피드백으로 보완하고 재사용합니다.</small></span></li>
+          </ol></div>
+      </details>
     </section>
 
     <section class="inquiry-teaser shell" id="inquiry" aria-labelledby="inquiry-title">
@@ -103,30 +155,10 @@
       </details>
     </section>
 
-    <section class="projects-section shell" id="projects" aria-labelledby="projects-title">
-      <div class="section-head">
-        <div>
-          <p class="section-kicker">PROJECT MACH · CASES</p>
-          <h2 id="projects-title">PROJECTS</h2>
-        </div>
-        <p><span id="visibleCount">24</span> CASES</p>
-      </div>
-
-      <div class="filter-row" role="group" aria-label="프로젝트 공개 범위 필터">
-        <button class="filter active" type="button" data-filter="all" aria-pressed="true">전체 <span>24</span></button>
-        <button class="filter" type="button" data-filter="public" aria-pressed="false">직접 사용 <span>14</span></button>
-        <button class="filter" type="button" data-filter="case" aria-pressed="false">사례 요약 <span>10</span></button>
-      </div>
-
-      <p class="materials-note"><span aria-hidden="true">✓</span> 설계자료는 외부 공유용으로 정리된 배포본만 연결했습니다. 운영 데이터와 내부 설정값은 포함하지 않습니다.</p>
-
-      <div class="project-grid" id="projectGrid"></div>
-    </section>
-
     <section class="closing shell" aria-labelledby="closing-title">
       <div>
         <p class="section-kicker">START WITH ONE FRICTION</p>
-        <h2 id="closing-title">반복되는 불편 하나,<br>바꾸는 것부터.</h2>
+        <h2 id="closing-title">반복되는 불편 하나, <br>바꾸는 것부터.</h2>
         <p class="closing-copy">PROJECT MACH의 사례를 바탕으로 우리 업무에 맞는 적용 방법을 함께 찾아봅니다.</p>
       </div>
       <a class="button light" href="#inquiry" id="closingInquiry">업무 적용 문의하기 <span aria-hidden="true">↗</span></a>
@@ -143,7 +175,7 @@
 
   <dialog class="case-dialog" id="caseDialog" aria-labelledby="dialogTitle">
     <button class="dialog-close" type="button" aria-label="사례 설명 닫기">×</button>
-    <div class="dialog-preview" id="dialogPreview"></div>
+    <div class="dialog-preview" id="dialogPreview" aria-hidden="true"></div>
     <div class="dialog-body">
       <div class="dialog-meta"><span id="dialogNumber"></span><span class="status case">CASE STUDY</span></div>
       <h2 id="dialogTitle"></h2>

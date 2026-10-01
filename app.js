@@ -205,6 +205,30 @@ const INQUIRY_RECIPIENT = 'keun0810@hanyang.ac.kr';
 const grid = document.querySelector('#projectGrid');
 const dialog = document.querySelector('#caseDialog');
 let currentCaseId = null;
+let caseTrigger = null;
+let focusAfterCase = null;
+
+// Classify only the existing public collection; project content stays unchanged.
+const CATEGORY_IDS = {
+  maker: ['01', '02', '04', '05', '15', '20', '21', '22', '23'],
+  request: ['06', '07', '08', '09', '10', '17', '24'],
+  manage: ['11', '13', '14', '16', '18'],
+  info: ['03', '12', '19']
+};
+const CATEGORY_LABELS = {
+  all: '전체 분류', maker: '제작·행사', request: '신청·예약', manage: '관리·기록', info: '정보·검색'
+};
+const projectCategoryById = new Map(Object.entries(CATEGORY_IDS).flatMap(([category, ids]) => ids.map(id => [id, category])));
+const normalizeSearch = value => String(value).normalize('NFKC').toLocaleLowerCase('ko').replace(/\s+/g, ' ').trim();
+const searchInput = document.querySelector('#projectSearch');
+const clearSearchButton = document.querySelector('#clearSearch');
+const categorySelect = document.querySelector('#projectCategory');
+const sortSelect = document.querySelector('#projectSort');
+const guideOnly = document.querySelector('#guideOnly');
+const filterButtons = Array.from(document.querySelectorAll('.filter[data-filter]'));
+let selectedAccess = 'all';
+let projectEntries = [];
+let currentSort = 'oldest';
 
 const escapeHtml = (value = '') => String(value).replace(/[&<>'"]/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
@@ -292,9 +316,9 @@ function guideMarkup(project) {
 function cardMarkup(project) {
   const access = ACCESS[project.access];
   const body = `
-    <div class="preview tone-${escapeHtml(project.tone)}" aria-hidden="true">${previewMarkup(project)}</div>
+    <div class="preview tone-${escapeHtml(project.tone)}" aria-hidden="true">${previewMarkup(project)}<small class="preview-label">화면 구성 예시</small></div>
     <div class="project-body">
-      <div class="card-meta"><span class="number">${escapeHtml(project.id)}</span><span class="status ${escapeHtml(project.access)}">${escapeHtml(access.label)}</span></div>
+      <div class="card-meta"><span class="number">${escapeHtml(project.id)}</span><time class="card-date" datetime="${escapeHtml(project.date.replace(/\./g, '-'))}">${escapeHtml(project.date)}</time><span class="status ${escapeHtml(project.access)}">${escapeHtml(access.label)}</span></div>
       <h3>${escapeHtml(project.name)}</h3>
       <p class="description">${escapeHtml(project.description)}</p>
       <div class="tags">${project.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>
@@ -309,20 +333,110 @@ function cardMarkup(project) {
     card = `<a class="project-card" href="${escapeHtml(project.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" data-access="${escapeHtml(project.access)}" aria-label="${escapeHtml(project.name)} ${escapeHtml(access.action)}">${body}</a>`;
   }
 
-  return `<article class="project-item">${card}${guideMarkup(project)}</article>`;
+  return `<article class="project-item" id="project-${escapeHtml(project.id)}" data-project-id="${escapeHtml(project.id)}" data-category="${escapeHtml(projectCategoryById.get(project.id))}">${card}${guideMarkup(project)}</article>`;
 }
 
-function renderProjects(filter = 'all') {
-  const visible = filter === 'all' ? PROJECTS : PROJECTS.filter(project => project.access === filter);
-  grid.innerHTML = visible.map(cardMarkup).join('');
-  document.querySelector('#visibleCount').textContent = visible.length;
-  grid.querySelectorAll('[data-case]').forEach(button => button.addEventListener('click', () => openCase(button.dataset.case)));
+function renderProjects() {
+  grid.innerHTML = PROJECTS.map(cardMarkup).join('');
+  projectEntries = PROJECTS.map(project => ({
+    project,
+    element: document.getElementById(`project-${project.id}`),
+    category: projectCategoryById.get(project.id),
+    searchText: normalizeSearch([project.name, project.description, ...project.tags].join(' '))
+  }));
+  grid.addEventListener('click', event => {
+    const button = event.target.closest('[data-case]');
+    if (button && grid.contains(button)) openCase(button.dataset.case, button);
+  });
 }
 
-function openCase(id) {
+function applyDiscovery() {
+  const terms = normalizeSearch(searchInput.value).split(' ').filter(Boolean);
+  const category = categorySelect.value;
+  const matchingAccessCounts = { all: 0, public: 0, case: 0 };
+  let visible = 0;
+  const focusedElement = document.activeElement;
+
+  projectEntries.forEach(entry => {
+    const matchesDiscovery = (category === 'all' || entry.category === category)
+      && (!guideOnly.checked || Boolean(entry.project.guideUrl))
+      && terms.every(term => entry.searchText.includes(term));
+    if (matchesDiscovery) {
+      matchingAccessCounts.all += 1;
+      matchingAccessCounts[entry.project.access] += 1;
+    }
+    const matches = matchesDiscovery && (selectedAccess === 'all' || entry.project.access === selectedAccess);
+    entry.element.hidden = !matches;
+    if (matches) visible += 1;
+  });
+
+  if (sortSelect.value !== currentSort) {
+    const direction = sortSelect.value === 'newest' ? -1 : 1;
+    const orderedEntries = [...projectEntries].sort((a, b) => direction * (
+      a.project.date.localeCompare(b.project.date)
+      || Number(a.project.id) - Number(b.project.id)
+    ));
+    grid.append(...orderedEntries.map(entry => entry.element));
+    currentSort = sortSelect.value;
+  }
+
+  filterButtons.forEach(button => {
+    const active = button.dataset.filter === selectedAccess;
+    const count = matchingAccessCounts[button.dataset.filter];
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+    button.setAttribute('aria-controls', 'projectGrid');
+    button.querySelector('span').textContent = count;
+    button.setAttribute('aria-label', `${button.dataset.label} ${count}개`);
+  });
+
+  const conditions = [];
+  if (selectedAccess !== 'all') conditions.push(ACCESS[selectedAccess].label);
+  if (category !== 'all') conditions.push(CATEGORY_LABELS[category]);
+  if (terms.length) conditions.push(`검색: “${searchInput.value.trim()}”`);
+  if (guideOnly.checked) conditions.push('설계자료 있음');
+  conditions.push(sortSelect.value === 'newest' ? '최신순' : '오래된순');
+  const results = document.querySelector('#projectResults');
+  results.setAttribute('role', 'status');
+  results.setAttribute('aria-live', 'polite');
+  results.setAttribute('aria-atomic', 'true');
+  results.textContent = `전체 ${PROJECTS.length}개 중 ${visible}개 표시 · ${conditions.join(' · ')}`;
+  document.querySelector('#visibleCount').textContent = visible;
+  document.querySelector('#emptyResults').hidden = visible !== 0;
+  clearSearchButton.hidden = searchInput.value.length === 0;
+
+  // Node reuse retains focus; restore it only if a DOM reorder moved it away.
+  if (focusedElement instanceof HTMLElement && grid.contains(focusedElement)) {
+    if (focusedElement.closest('.project-item').hidden) {
+      searchInput.focus({ preventScroll: true });
+    } else if (document.activeElement !== focusedElement) {
+      focusedElement.focus({ preventScroll: true });
+    }
+  }
+}
+
+function resetDiscovery() {
+  searchInput.value = '';
+  categorySelect.value = 'all';
+  sortSelect.value = 'oldest';
+  guideOnly.checked = false;
+  selectedAccess = 'all';
+  applyDiscovery();
+  searchInput.focus({ preventScroll: true });
+}
+
+function clearSearch() {
+  searchInput.value = '';
+  applyDiscovery();
+  searchInput.focus({ preventScroll: true });
+}
+
+function openCase(id, trigger) {
   const project = PROJECTS.find(item => item.id === id && item.access === 'case');
   if (!project) return;
   currentCaseId = id;
+  caseTrigger = trigger || document.activeElement;
+  focusAfterCase = null;
   document.querySelector('#dialogPreview').className = `dialog-preview tone-${project.tone}`;
   document.querySelector('#dialogPreview').innerHTML = previewMarkup(project);
   document.querySelector('#dialogNumber').textContent = `PROJECT ${project.id}`;
@@ -337,34 +451,95 @@ function openCase(id) {
 }
 
 function closeCase() {
-  dialog.close();
-  document.body.classList.remove('dialog-open');
+  if (dialog.open) dialog.close();
 }
 
-document.querySelectorAll('.filter').forEach(button => {
+filterButtons.forEach(button => {
+  button.dataset.label = Array.from(button.childNodes)
+    .filter(node => node.nodeType === Node.TEXT_NODE)
+    .map(node => node.textContent).join('').trim();
   button.addEventListener('click', () => {
-    document.querySelectorAll('.filter').forEach(item => {
-      const selected = item === button;
-      item.classList.toggle('active', selected);
-      item.setAttribute('aria-pressed', String(selected));
-    });
-    renderProjects(button.dataset.filter);
+    selectedAccess = button.dataset.filter;
+    applyDiscovery();
   });
 });
 
-document.querySelectorAll('.dialog-close, .dialog-close-secondary').forEach(button => button.addEventListener('click', closeCase));
-dialog.addEventListener('click', event => {
-  if (event.target === dialog) closeCase();
+let searchIsComposing = false;
+searchInput.addEventListener('compositionstart', () => { searchIsComposing = true; });
+searchInput.addEventListener('compositionend', () => {
+  searchIsComposing = false;
+  applyDiscovery();
 });
-dialog.addEventListener('close', () => document.body.classList.remove('dialog-open'));
+searchInput.addEventListener('input', event => {
+  clearSearchButton.hidden = searchInput.value.length === 0;
+  if (!searchIsComposing && !event.isComposing) applyDiscovery();
+});
+searchInput.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !searchIsComposing && !event.isComposing && event.keyCode !== 229 && searchInput.value) {
+    event.preventDefault();
+    clearSearch();
+  }
+});
+clearSearchButton.addEventListener('click', clearSearch);
+categorySelect.addEventListener('change', applyDiscovery);
+sortSelect.addEventListener('change', applyDiscovery);
+guideOnly.addEventListener('change', applyDiscovery);
+document.querySelector('#resetDiscovery').addEventListener('click', resetDiscovery);
+document.querySelector('#emptyReset').addEventListener('click', resetDiscovery);
+document.addEventListener('keydown', event => {
+  const target = event.target;
+  const isEditing = target instanceof HTMLElement && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName));
+  if (event.key === '/' && !isEditing && !dialog.open && !event.isComposing && event.keyCode !== 229
+    && !event.altKey && !event.ctrlKey && !event.metaKey) {
+    event.preventDefault();
+    searchInput.focus();
+    searchInput.scrollIntoView({ block: 'center', behavior: 'auto' });
+  }
+});
+
+document.querySelectorAll('.dialog-close, .dialog-close-secondary').forEach(button => button.addEventListener('click', closeCase));
+dialog.addEventListener('keydown', event => {
+  if (!dialog.open || event.key !== 'Tab') return;
+  const focusable = Array.from(dialog.querySelectorAll('a[href], button, input, select, textarea, summary, [tabindex], [contenteditable="true"]'))
+    .filter(element => element instanceof HTMLElement && element.tabIndex >= 0
+      && !element.matches(':disabled, [aria-disabled="true"]')
+      && !element.closest('[hidden], [inert]') && element.getClientRects().length > 0
+      && !['hidden', 'collapse'].includes(window.getComputedStyle(element).visibility));
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+});
+dialog.addEventListener('click', event => {
+  if (event.target !== dialog) return;
+  const bounds = dialog.getBoundingClientRect();
+  if (event.clientX < bounds.left || event.clientX > bounds.right
+    || event.clientY < bounds.top || event.clientY > bounds.bottom) closeCase();
+});
+dialog.addEventListener('close', () => {
+  document.body.classList.remove('dialog-open');
+  const focusTarget = focusAfterCase || caseTrigger;
+  focusAfterCase = null;
+  if (focusTarget instanceof HTMLElement && focusTarget.isConnected
+    && !focusTarget.closest('[hidden]')) focusTarget.focus({ preventScroll: true });
+});
 
 document.querySelector('#askAboutCase').addEventListener('click', () => {
   const project = PROJECTS.find(item => item.id === currentCaseId);
-  closeCase();
   const details = document.querySelector('.inquiry-details');
   details.open = true;
   if (project) document.querySelector('#reference').value = project.name;
-  document.querySelector('#inquiry').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  focusAfterCase = document.querySelector('#name');
+  closeCase();
+  document.querySelector('#inquiry').scrollIntoView({
+    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'
+  });
 });
 
 document.querySelectorAll('a[href="#inquiry"]').forEach(link => {
@@ -419,3 +594,4 @@ document.querySelector('[data-filter="case"] span').textContent = counts.case;
 document.querySelector('#year').textContent = new Date().getFullYear();
 document.querySelector('#version').textContent = SITE_VERSION;
 renderProjects();
+applyDiscovery();
