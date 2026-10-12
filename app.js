@@ -195,7 +195,7 @@ const PROJECTS = [
   {
     id: '25', name: '업무분장 스튜디오', date: '2026.10.12', access: 'public',
     description: '부서별 최대 50명의 조직도와 팀·파트별 업무를 정리하고, 공동 담당·인수인계·JSON 백업·인쇄까지 이어지는 업무분장 도구. 입력 자료는 사용하는 브라우저에 저장됩니다.',
-    url: './tools/rolemap/', tags: ['업무분장', '조직도', '공동 담당', '팀·파트'], visual: 'rolemap', tone: 'green', preview: 'TEAM ROLE MAP'
+    url: 'https://erakeun.github.io/ERICAAI/rolemap/', tags: ['업무분장', '조직도', '공동 담당', '팀·파트'], visual: 'rolemap', tone: 'green', preview: 'TEAM ROLE MAP'
   }
 ];
 

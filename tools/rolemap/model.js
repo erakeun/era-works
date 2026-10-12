@@ -23,7 +23,7 @@ export function makeDemo() {
  return {schemaVersion:SCHEMA,updatedAt:new Date().toISOString(),activeDepartmentId:'dept-demo',departments:[{id:'dept-demo',name:'경영지원처',description:'함께 만드는 명확한 역할과 책임',effectiveDate:new Date().toLocaleDateString('sv-SE'),members:m,tasks:labels.map((title,i)=>({id:uid(),code:String.fromCharCode(65+i),title,category:i<10?'기획·운영':i<20?'사업·지원':'공통업무',owners:i<20?[m[assign[i]].id,...([4,10,14,18].includes(i)?[m[assign[i]===9?8:assign[i]+1].id]:[])]:[],weight:i%5===0?3:i%3===0?2:1,priority:i%7===0?'높음':'보통',notes:''}))}],history:[]};
 }
 export function validateState(input) {
- if(!input||typeof input!=='object'||input.schemaVersion!==SCHEMA) throw Error('지원하지 않는 파일 형식입니다. MAHA에서 저장한 JSON 파일을 선택해 주세요.');
+ if(!input||typeof input!=='object'||input.schemaVersion!==SCHEMA) throw Error('지원하지 않는 파일 형식입니다. MACH에서 저장한 JSON 파일을 선택해 주세요.');
  if(!Array.isArray(input.departments)||!input.departments.length||input.departments.length>30) throw Error('부서는 1~30개여야 합니다.');
  const text=(s,max=160)=>typeof s==='string'&&s.length<=max;
  const ids=new Set();
