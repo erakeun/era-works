@@ -191,6 +191,11 @@ const PROJECTS = [
     id: '24', name: 'ERICA 디자인 요청 시스템', date: '2026.09.17', access: 'public', operational: true,
     description: '캐릭터의 새 표정·동작이나 현수막·포스터·카드뉴스 제작 요청을 선택형 문항으로 정리해 담당자 이메일 협의로 연결하는 교내 디자인 요청 시스템.',
     url: 'https://erakeun.github.io/erica-design-request/', tags: ['디자인 요청', '신청·접수', '업무 표준화'], visual: 'design-request', tone: 'violet', preview: 'DESIGN REQUEST'
+  },
+  {
+    id: '25', name: '업무분장 스튜디오', date: '2026.10.12', access: 'public',
+    description: '부서별 최대 50명의 조직도와 팀·파트별 업무를 정리하고, 공동 담당·인수인계·JSON 백업·인쇄까지 이어지는 업무분장 도구. 입력 자료는 사용하는 브라우저에 저장됩니다.',
+    url: './tools/rolemap/', tags: ['업무분장', '조직도', '공동 담당', '팀·파트'], visual: 'rolemap', tone: 'green', preview: 'TEAM ROLE MAP'
   }
 ];
 
@@ -199,7 +204,7 @@ const ACCESS = {
   case: { label: '외부용 사례 요약', action: '사례 자세히 보기', icon: '→' }
 };
 
-const SITE_VERSION = 'v1.1.0';
+const SITE_VERSION = 'v1.2.0';
 const INQUIRY_RECIPIENT = 'keun0810@hanyang.ac.kr';
 
 const grid = document.querySelector('#projectGrid');
@@ -212,7 +217,7 @@ let focusAfterCase = null;
 const CATEGORY_IDS = {
   maker: ['01', '02', '04', '05', '15', '20', '21', '22', '23'],
   request: ['06', '07', '08', '09', '10', '17', '24'],
-  manage: ['11', '13', '14', '16', '18'],
+  manage: ['11', '13', '14', '16', '18', '25'],
   info: ['03', '12', '19']
 };
 const CATEGORY_LABELS = {
@@ -243,6 +248,9 @@ function previewMarkup(project) {
   let content = '';
 
   switch (project.visual) {
+    case 'rolemap':
+      content = '<div class="mock rolemap-preview"><div class="rolemap-lead">처장 · 운영 총괄</div><div class="rolemap-branches"><div><b>기획운영팀</b><span>사업 계획 · 예산</span></div><div><b>사업지원팀</b><span>계약 · 행사 운영</span></div></div><small>업무 배정 · 공동 담당 · 인쇄</small></div>';
+      break;
     case 'card-maker':
       content = `<div class="mock card-maker"><div class="mock-sheet"><div class="mock-person">홍 길 동</div><div class="mock-role">HANYANG UNIVERSITY ERICA</div><div class="mock-blue-line"></div>${lineSet()}</div></div>`;
       break;
@@ -586,6 +594,7 @@ const counts = PROJECTS.reduce((result, project) => {
 }, { public: 0, case: 0 });
 
 document.querySelector('#totalCount').textContent = PROJECTS.length;
+document.querySelector('#collectionCount').textContent = PROJECTS.length;
 document.querySelector('#publicCount').textContent = counts.public;
 document.querySelector('#caseCount').textContent = counts.case;
 document.querySelector('[data-filter="all"] span').textContent = PROJECTS.length;

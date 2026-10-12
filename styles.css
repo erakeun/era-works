@@ -286,3 +286,6 @@ details[open] .summary-toggle{transform:rotate(45deg)}
 /* Fit the retained illustrative layouts inside the compact card previews. */
 .preview .preview-bar{height:24px}
 .preview .mock{top:24px;width:138.89%;height:146px;bottom:auto;transform:scale(.72);transform-origin:top left}
+
+/* Role assignment studio preview uses fictional roles only. */
+.rolemap-preview{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:8px 14px;color:#285043;background:#f8fbf6}.rolemap-lead{padding:6px 16px;border:1px solid #b8ccb4;border-radius:5px;background:white;font-size:9px;font-weight:800}.rolemap-branches{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:270px}.rolemap-branches:before{content:"";position:absolute;height:9px;width:50%;left:25%;top:-9px;border-top:1px solid #bfd0b9;border-left:1px solid #bfd0b9;border-right:1px solid #bfd0b9}.rolemap-branches>div{display:grid;gap:4px;background:white;border:1px solid #d7e2d1;border-radius:5px;padding:6px 8px;text-align:center}.rolemap-branches b{font-size:8px}.rolemap-branches span,.rolemap-preview>small{font-size:7px;color:#6a8061}
