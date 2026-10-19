@@ -233,7 +233,7 @@ const guideOnly = document.querySelector('#guideOnly');
 const filterButtons = Array.from(document.querySelectorAll('.filter[data-filter]'));
 let selectedAccess = 'all';
 let projectEntries = [];
-let currentSort = 'oldest';
+let currentSort = null;
 
 const escapeHtml = (value = '') => String(value).replace(/[&<>'"]/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
@@ -426,7 +426,7 @@ function applyDiscovery() {
 function resetDiscovery() {
   searchInput.value = '';
   categorySelect.value = 'all';
-  sortSelect.value = 'oldest';
+  sortSelect.value = 'newest';
   guideOnly.checked = false;
   selectedAccess = 'all';
   applyDiscovery();
@@ -490,7 +490,10 @@ searchInput.addEventListener('keydown', event => {
 });
 clearSearchButton.addEventListener('click', clearSearch);
 categorySelect.addEventListener('change', applyDiscovery);
-sortSelect.addEventListener('change', applyDiscovery);
+sortSelect.addEventListener('change', () => {
+  applyDiscovery();
+  grid.scrollIntoView({ block: 'start', behavior: 'auto' });
+});
 guideOnly.addEventListener('change', applyDiscovery);
 document.querySelector('#resetDiscovery').addEventListener('click', resetDiscovery);
 document.querySelector('#emptyReset').addEventListener('click', resetDiscovery);
