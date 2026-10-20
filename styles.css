@@ -17,7 +17,7 @@ button,a,input,select,textarea,summary{outline-offset:4px}
 .site-header{border-bottom:1px solid var(--line)}
 .nav-wrap{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .brand{display:inline-flex;align-items:center;gap:16px;min-width:0}
-.brand-logo{display:block;width:116px;height:auto}
+.brand-logo{display:block;width:116px;height:auto;aspect-ratio:254/58;object-fit:contain}
 .brand-context{font-size:10px;letter-spacing:.09em;color:var(--muted);font-weight:650;white-space:nowrap}
 .nav-links{display:flex;align-items:center;gap:24px}
 .nav-links a{min-height:44px;display:flex;align-items:center;color:var(--muted);font-size:13px;font-weight:650}
